@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="description" content="Dynamic Developer Portfolio - Full Stack Developer showcasing projects and skills">
+  <meta name="keywords" content="developer, portfolio, github, projects, full stack">
+  <title>Dynamic Dev Portfolio | Full Stack Developer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: rgba(255, 255, 255, 0.06);
+      --text-primary: #f0f9ff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #7dd3fc;
+      --accent-glow: rgba(56, 189, 248, 0.4);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(56, 189, 248, 0.5);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow-lg: 0 25px 45px -15px rgba(0, 0, 0, 0.5);
+      --shadow-card: 0 15px 30px -12px rgba(0, 0, 0, 0.4);
+      --radius-lg: 2.5rem;
+      --radius-md: 1.8rem;
+      --radius-sm: 1rem;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Light Theme */
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #e2e8f0;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --border: rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 25px 45px -15px rgba(0, 0, 0, 0.1);
+      --shadow-card: 0 15px 30px -12px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      min-height: 100vh;
+      transition: var(--transition);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated background particles */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.1;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-100px) rotate(120deg); }
+      66% { transform: translateY(50px) rotate(240deg); }
+    }
+
+    /* Main Container */
+    .portfolio-wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-card);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nav-brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-brand i {
+      color: var(--accent);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.6rem 1rem 0.6rem 2.5rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      width: 200px;
+      transition: var(--transition);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      width: 250px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .theme-toggle, .refresh-btn {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.6rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .theme-toggle:hover, .refresh-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title h2 {
+      color: var(--text-primary);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .section-title .line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      border-radius: 1px;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+    }
+
+    .profile-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .avatar-wrapper {
+      position: relative;
+    }
+
+    .avatar-wrapper img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 40px var(--accent-glow);
+      transition: var(--transition);
+    }
+
+    .avatar-wrapper img:hover {
+      transform: scale(1.05) rotate(5deg);
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      width: 20px;
+      height: 20px;
+      background: var(--success);
+      border: 3px solid var(--bg-primary);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      50% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+    }
+
+    .profile-info h1 {
+      font-size: 2.2rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-info .title {
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .profile-info .bio {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .stat-card .number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+
+    .social-link.github {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .social-link.github:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 8px 25px var(--accent-glow);
+    }
+
+    .social-link.outline {
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .social-link.outline:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-item {
+      background: var(--bg-card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.2rem;
+      text-align: center;
+      transition: var(--transition);
+      cursor: default;
+    }
+
+    .skill-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px var(--accent-glow);
+    }
+
+    .skill-item i {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-item span {
+      display: block;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.8rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 1rem;
+    }
+
+    .project-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .project-name i {
+      color: var(--accent);
+    }
+
+    .project-visibility {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 1rem;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .project-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      min-height: 60px;
+    }
+
+    .project-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .topic-tag {
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent);
+      padding: 0.25rem 0.8rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .project-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .project-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 1.5rem;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .project-link.primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .project-link.primary:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 5px 20px var(--accent-glow);
+    }
+
+    .project-link.secondary {
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .project-link.secondary:hover {
+      border-color: var(--accent);
+    }
+
+    /* Contact Section */
+    .contact-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 1.5rem;
+      max-width: 600px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      transition: var(--transition);
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      background: var(--accent);
+      color: var(--bg-primary);
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-self: start;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 10px 30px var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .form-feedback {
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .form-feedback.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .form-feedback.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* Loading & Error States */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-card) 50%, var(--bg-secondary) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+    .skeleton-text {
+      height: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .skeleton-text.short { width: 60%; }
+    .skeleton-text.medium { width: 80%; }
+    .skeleton-text.long { width: 100%; }
+
+    .skeleton-card {
+      height: 250px;
+      border-radius: var(--radius-md);
+    }
+
+    .error-toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(239, 68, 68, 0.95);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      animation: slideIn 0.3s ease;
+      display: none;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    .no-results i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .profile-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .avatar-wrapper {
+        margin: 0 auto;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-controls {
+        flex-direction: column;
+      }
+
+      .search-box input {
+        width: 100%;
+      }
+
+      .search-box input:focus {
+        width: 100%;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Scroll to top button */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--accent);
+      color: var(--bg-primary);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px var(--accent-glow);
+    }
+
+    .scroll-top.visible {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Particles -->
+  <div class="bg-particles" id="particles"></div>
+
+  <!-- Error Toast -->
+  <div class="error-toast" id="errorToast">
+    <i class="fas fa-exclamation-circle"></i>
+    <span id="errorMessage"></span>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" id="scrollTop" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Main Portfolio Wrapper -->
+  <div class="portfolio-wrapper">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="fas fa-code"></i>
+        <span>DevPortfolio</span>
+      </div>
+      <div class="nav-controls">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search projects..." aria-label="Search projects">
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+          <span>Dark</span>
+        </button>
+        <button class="refresh-btn" id="refreshBtn" aria-label="Refresh data">
+          <i class="fas fa-sync-alt"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="section" id="profileSection">
+      <div class="section-title">
+        <h2><i class="fas fa-user-astronaut"></i> Developer Profile</h2>
+        <div class="line"></div>
+      </div>
+      <div class="profile-card" id="profileCard">
+        <!-- Skeleton Loading -->
+        <div class="skeleton skeleton-circle"></div>
+        <div>
+          <div class="skeleton skeleton-text medium" style="height: 2rem;"></div>
+          <div class="skeleton skeleton-text short"></div>
+          <div class="skeleton skeleton-text long"></div>
+          <div class="skeleton skeleton-text medium"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skillsSection">
+      <div class="section-title">
+        <h2><i class="fas fa-tools"></i> Technologies & Skills</h2>
+        <div class="line"></div>
+      </div>
+      <div class="skills-grid" id="skillsGrid">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projectsSection">
+      <div class="section-title">
+        <h2><i class="fas fa-project-diagram"></i> Projects</h2>
+        <span id="projectCount" style="color: var(--accent); font-weight: 600;"></span>
+        <div class="line"></div>
+      </div>
+      <div class="projects-grid" id="projectsGrid">
+        <!-- Skeleton Loading -->
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contactSection">
+      <div class="section-title">
+        <h2><i class="fas fa-envelope"></i> Get In Touch</h2>
+        <div class="line"></div>
+      </div>
+      <div class="contact-card">
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i> Your Name</label>
+            <input type="text" id="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email"><i class="fas fa-at"></i> Email Address</label>
+            <input type="email" id="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message"><i class="fas fa-comment"></i> Message</label>
+            <textarea id="message" placeholder="Hello! I'd love to connect..." required></textarea>
+          </div>
+          <div class="form-feedback" id="formFeedback"></div>
+          <button type="submit" class="submit-btn" id="submitBtn">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>© <span id="currentYear"></span> Dynamic Developer Portfolio • Built with GitHub API</p>
+      <p style="margin-top: 0.5rem;">
+        <i class="fas fa-sync-alt fa-spin" style="color: var(--accent);"></i>
+        Auto-updates every 5 minutes
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    (function() {
+      // ==================== CONFIGURATION ====================
+      const GITHUB_USERNAME = 'torvalds'; // Change to your GitHub username
+      const GITHUB_API_USER = `https://api.github.com/users/${GITHUB_USERNAME}`;
+      const GITHUB_API_REPOS = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=12&sort=updated&direction=desc`;
+      const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
+      
+      // Skills data (customizable)
+      const SKILLS = [
+        { name: 'JavaScript', icon: 'fab fa-js-square', color: '#f7df1e' },
+        { name: 'Python', icon: 'fab fa-python', color: '#3776ab' },
+        { name: 'React', icon: 'fab fa-react', color: '#61dafb' },
+        { name: 'Node.js', icon: 'fab fa-node-js', color: '#339933' },
+        { name: 'Git', icon: 'fab fa-git-alt', color: '#f05032' },
+        { name: 'Docker', icon: 'fab fa-docker', color: '#2496ed' },
+        { name: 'AWS', icon: 'fab fa-aws', color: '#ff9900' },
+        { name: 'Database', icon: 'fas fa-database', color: '#38bdf8' },
+      ];
+
+      // ==================== DOM ELEMENTS ====================
+      const profileCard = document.getElementById('profileCard');
+      const skillsGrid = document.getElementById('skillsGrid');
+      const projectsGrid = document.getElementById('projectsGrid');
+      const projectCount = document.getElementById('projectCount');
+      const searchInput = document.getElementById('searchInput');
+      const themeToggle = document.getElementById('themeToggle');
+      const refreshBtn = document.getElementById('refreshBtn');
+      const contactForm = document.getElementById('contactForm');
+      const formFeedback = document.getElementById('formFeedback');
+      const submitBtn = document.getElementById('submitBtn');
+      const errorToast = document.getElementById('errorToast');
+      const errorMessage = document.getElementById('errorMessage');
+      const scrollTopBtn = document.getElementById('scrollTop');
+      const currentYearSpan = document.getElementById('currentYear');
+
+      let allRepos = [];
+      let currentTheme = 'dark';
+
+      // ==================== UTILITY FUNCTIONS ====================
+      function formatNumber(num) {
+        if (!num && num !== 0) return '0';
+        return num >= 1000 ? (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : num.toString();
+      }
+
+      function escapeHTML(str) {
+        if (!str) return '';
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorToast.style.display = 'block';
+        setTimeout(() => { errorToast.style.display = 'none'; }, 5000);
+      }
+
+      function showFormFeedback(message, type) {
+        formFeedback.textContent = message;
+        formFeedback.className = `form-feedback ${type}`;
+        setTimeout(() => { formFeedback.className = 'form-feedback'; }, 5000);
+      }
+
+      // ==================== THEME MANAGEMENT ====================
+      function toggleTheme() {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        localStorage.setItem('portfolio-theme', currentTheme);
+        
+        const icon = themeToggle.querySelector('i');
+        const text = themeToggle.querySelector('span');
+        if (currentTheme === 'light') {
+          icon.className = 'fas fa-sun';
+          text.textContent = 'Light';
+        } else {
+          icon.className = 'fas fa-moon';
+          text.textContent = 'Dark';
+        }
+      }
+
+      function loadTheme() {
+        const saved = localStorage.getItem('portfolio-theme') || 'dark';
+        currentTheme = saved;
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        const icon = themeToggle.querySelector('i');
+        const text = themeToggle.querySelector('span');
+        if (currentTheme === 'light') {
+          icon.className = 'fas fa-sun';
+          text.textContent = 'Light';
+        } else {
+          icon.className = 'fas fa-moon';
+          text.textContent = 'Dark';
+        }
+      }
+
+      // ==================== BACKGROUND PARTICLES ====================
+      function createParticles() {
+        const container = document.getElementById('particles');
+        container.innerHTML = '';
+        for (let i = 0; i < 20; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          const size = Math.random() * 10 + 5;
+          particle.style.width = size + 'px';
+          particle.style.height = size + 'px';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 20 + 's';
+          particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+          container.appendChild(particle);
+        }
+      }
+
+      // ==================== RENDER FUNCTIONS ====================
+      function renderProfile(user) {
+        if (!user) {
+          profileCard.innerHTML = `
+            <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+              <i class="fas fa-user-slash" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+              <p>Failed to load profile</p>
+            </div>`;
+          return;
+        }
+
+        profileCard.innerHTML = `
+          <div class="avatar-wrapper">
+            <img src="${user.avatar_url}" alt="${escapeHTML(user.login)}" 
+                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.login)}&background=38bdf8&color=fff&size=150'">
+            <div class="status-dot"></div>
+          </div>
+          <div class="profile-info">
+            <h1>${escapeHTML(user.name || user.login)}</h1>
+            <div class="title">
+              <i class="fas fa-terminal"></i> ${escapeHTML(user.bio || 'Full Stack Developer')}
+            </div>
+            <p class="bio">
+              ${escapeHTML(user.bio || 'Passionate about building great software and contributing to open source projects.')}
+            </p>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="number">${formatNumber(user.public_repos)}</div>
+                <div class="label">Repositories</div>
+              </div>
+              <div class="stat-card">
+                <div class="number">${formatNumber(user.followers)}</div>
+                <div class="label">Followers</div>
+              </div>
+              <div class="stat-card">
+                <div class="number">${formatNumber(user.following)}</div>
+                <div class="label">Following</div>
+              </div>
+              <div class="stat-card">
+                <div class="number">${user.company ? '🏢' : '🌟'}</div>
+                <div class="label">${user.company ? escapeHTML(user.company) : 'Open Source'}</div>
+              </div>
+            </div>
+            <div class="social-links">
+              <a href="${user.html_url}" target="_blank" rel="noopener" class="social-link github">
+                <i class="fab fa-github"></i> GitHub Profile
+              </a>
+              ${user.blog ? `
+                <a href="${escapeHTML(user.blog)}" target="_blank" rel="noopener" class="social-link outline">
+                  <i class="fas fa-globe"></i> Website
+                </a>` : ''}
+              ${user.twitter_username ? `
+                <a href="https://twitter.com/${escapeHTML(user.twitter_username)}" target="_blank" rel="noopener" class="social-link outline">
+                  <i class="fab fa-twitter"></i> Twitter
+                </a>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderSkills() {
+        skillsGrid.innerHTML = SKILLS.map(skill => `
+          <div class="skill-item">
+            <i class="${skill.icon}" style="color: ${skill.color};"></i>
+            <span>${escapeHTML(skill.name)}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderProjects(repos) {
+        if (!repos || repos.length === 0) {
+          projectsGrid.innerHTML = `
+            <div class="no-results" style="grid-column: 1/-1;">
+              <i class="fas fa-folder-open"></i>
+              <p>No projects found</p>
+            </div>`;
+          projectCount.textContent = '(0)';
+          return;
+        }
+
+        projectCount.textContent = `(${repos.length})`;
+        projectsGrid.innerHTML = repos.map(repo => `
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-name">
+                <i class="fas fa-book-bookmark"></i>
+                ${escapeHTML(repo.name)}
+              </div>
+              <span class="project-visibility">${repo.private ? 'Private' : 'Public'}</span>
+            </div>
+            <p class="project-desc">${escapeHTML(repo.description || 'No description available')}</p>
+            ${repo.topics && repo.topics.length > 0 ? `
+              <div class="project-topics">
+                ${repo.topics.slice(0, 4).map(topic => `
+                  <span class="topic-tag">${escapeHTML(topic)}</span>
+                `).join('')}
+              </div>` : ''}
+            <div class="project-stats">
+              ${repo.language ? `
+                <span><i class="fas fa-circle" style="color: var(--accent); font-size: 0.6rem;"></i> ${escapeHTML(repo.language)}</span>` : ''}
+              <span><i class="far fa-star"></i> ${formatNumber(repo.stargazers_count)}</span>
+              <span><i class="fas fa-code-branch"></i> ${formatNumber(repo.forks_count)}</span>
+              <span><i class="far fa-clock"></i> ${new Date(repo.updated_at).toLocaleDateString()}</span>
+            </div>
+            <div class="project-links">
+              <a href="${repo.html_url}" target="_blank" rel="noopener" class="project-link primary">
+                <i class="fas fa-code"></i> View Code
+              </a>
+              ${repo.homepage ? `
+                <a href="${escapeHTML(repo.homepage)}" target="_blank" rel="noopener" class="project-link secondary">
+                  <i class="fas fa-external-link-alt"></i> Live Demo
+                </a>` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function filterRepos(query) {
+        const filtered = allRepos.filter(repo => 
+          repo.name.toLowerCase().includes(query) ||
+          (repo.description && repo.description.toLowerCase().includes(query)) ||
+          (repo.language && repo.language.toLowerCase().includes(query)) ||
+          (repo.topics && repo.topics.some(t => t.toLowerCase().includes(query)))
+        );
+        renderProjects(filtered);
+      }
+
+      // ==================== API FETCHING ====================
+      async function fetchWithErrorHandling(url, errorMsg) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          return await response.json();
+        } catch (error) {
+          console.error(`API Error: ${errorMsg}`, error);
+          showError(`${errorMsg}: ${error.message}`);
+          throw error;
+        }
+      }
+
+      async function fetchProfile() {
+        try {
+          const user = await fetchWithErrorHandling(GITHUB_API_USER, 'Failed to load profile');
+          renderProfile(user);
+          return user;
+        } catch {
+          profileCard.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--danger);">
+              <i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>
+              <p>Unable to load profile. Please check your internet connection.</p>
+            </div>`;
+          return null;
+        }
+      }
+
+      async function fetchRepos() {
+        try {
+          const repos = await fetchWithErrorHandling(GITHUB_API_REPOS, 'Failed to load repositories');
+          allRepos = repos || [];
+          renderProjects(allRepos);
+          return repos;
+        } catch {
+          projectsGrid.innerHTML = `
+            <div class="no-results" style="grid-column: 1/-1;">
+              <i class="fas fa-exclamation-circle"></i>
+              <p>Could not load projects. Try refreshing.</p>
+            </div>`;
+          projectCount.textContent = '(0)';
+          return [];
+        }
+      }
+
+      async function refreshAllData() {
+        refreshBtn.querySelector('i').classList.add('fa-spin');
+        refreshBtn.querySelector('span').textContent = 'Refreshing...';
+        refreshBtn.disabled = true;
+
+        await Promise.all([fetchProfile(), fetchRepos()]);
+
+        setTimeout(() => {
+          refreshBtn.querySelector('i').classList.remove('fa-spin');
+          refreshBtn.querySelector('span').textContent = 'Refresh';
+          refreshBtn.disabled = false;
+        }, 500);
+      }
+
+      // ==================== CONTACT FORM ====================
+      function handleContactSubmit(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) {
+          showFormFeedback('Please fill in all fields', 'error');
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showFormFeedback('Please enter a valid email address', 'error');
+          return;
+        }
+
+        // Simulate sending (replace with actual backend endpoint)
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+        setTimeout(() => {
+          // In production, replace this with fetch() to your backend
+          console.log('Contact form submitted:', { name, email, message });
+          
+          showFormFeedback('Message sent successfully! (Demo mode)', 'success');
+          contactForm.reset();
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        }, 1500);
+      }
+
+      // ==================== SCROLL TO TOP ====================
+      function handleScroll() {
+        if (window.scrollY > 300) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      }
+
+      function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ==================== INITIALIZATION ====================
+      function init() {
+        // Set current year
+        currentYearSpan.textContent = new Date().getFullYear();
+        
+        // Load theme
+        loadTheme();
+        
+        // Create particles
+        createParticles();
+        
+        // Render skills immediately (static data)
+        renderSkills();
+        
+        // Fetch dynamic data
+        fetchProfile();
+        fetchRepos();
+        
+        // Event listeners
+        themeToggle.addEventListener('click', toggleTheme);
+        refreshBtn.addEventListener('click', refreshAllData);
+        contactForm.addEventListener('submit', handleContactSubmit);
+        window.addEventListener('scroll', handleScroll);
+        scrollTopBtn.addEventListener('click', scrollToTop);
+        
+        // Search with debounce
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            const query = e.target.value.toLowerCase().trim();
+            filterRepos(query);
+          }, 300);
+        });
+
+        // Auto-refresh
+        setInterval(() => {
+          console.log('Auto-refreshing portfolio data...');
+          fetchProfile();
+          fetchRepos();
+        }, AUTO_REFRESH_INTERVAL);
+      }
+
+      // Start when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
